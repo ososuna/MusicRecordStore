@@ -28,6 +28,15 @@ public class Users {
         // TODO: removeUser method
     }
 
+    public User findUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     static public Users instance(ArrayList<User> users) {
         if (_instance == null) {
             _instance = new Users(users);
