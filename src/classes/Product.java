@@ -65,11 +65,11 @@ public class Product {
     public void setCost(double cost) {
         this.cost = cost;
     }
-
+    
     @Override
     public String toString() {
-        return "Product [artist=" + artist + ", cost=" + cost + ", gender=" + gender + ", id=" + id + ", name=" + name
-                + ", year=" + year + "]";
+        return "\n" + name + "\nArtist: " + artist + "\nGender: " + gender
+                + "\nYear: " + year + "\nCost: $" + cost;
     }
 
 }
