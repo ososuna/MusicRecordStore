@@ -9,7 +9,7 @@ public class Menu {
     
     public static Users users = Users.instance(new ArrayList<User>());
     public static Session session;
-    public static ShoppingCart shoppingCart;
+    public static ShoppingCart shoppingCart = ShoppingCart.instance(new ArrayList<Product>());
     
     public static Catalogue catalogue = Catalogue.instance(
         new ArrayList<Product>() {
@@ -79,7 +79,7 @@ public class Menu {
             
             switch (option) {
                 case 1:
-                    // TODO
+                    addProductToShoppingCart();
                     break;
                 case 2:
                     // TODO
@@ -91,12 +91,14 @@ public class Menu {
                     // TODO
                     break;
                 case 5:
-                    // TODO
+                    System.out.println("\nMY SHOPPING CART");
+                    myShoppingCart();
                     break;
                 case 6:
                     // TODO
                     break;
                 case 7:
+                    System.out.println("\nCATALOGUE");
                     showCatalogue();
                     break;
                 case 8:
@@ -171,7 +173,30 @@ public class Menu {
     }
 
     public static void addProductToShoppingCart() {
-        // TODO: menu method    
+        
+        String id;
+        Product product;
+        
+        System.out.println("\nADD PRODUCT TO SHOPPING CART");
+        
+        showCatalogue();
+
+        scanner.nextLine();
+
+        System.out.print("\nEnter id: ");
+        id = scanner.nextLine();
+
+        product = catalogue.findProductById(id);
+
+        if (product == null) {
+            System.out.println("\nThere is no product with this id :(");
+            return;
+        }
+
+        shoppingCart.addProduct(product);
+
+        System.out.println("\nProduct added successfully :)");
+
     }
     
     public static void removeProductInShoppingCart() {
@@ -179,7 +204,9 @@ public class Menu {
     }
 
     public static void showShoppingCart() {
-        // TODO: menu method
+        for (Product product : shoppingCart.getProducts()) {
+            System.out.println(product);
+        }
     }
 
     public static void createOrder() {
@@ -187,7 +214,16 @@ public class Menu {
     }
 
     public static void myShoppingCart() {
-        // TODO: menu method
+    
+        if (shoppingCart.getProducts().size() == 0) {
+            System.out.println("\nYour shopping cart is empty :(");    
+            return;
+        }
+
+        for (Product product : shoppingCart.getProducts()) {
+            System.out.println(product);
+        }
+
     }
     
     public static void myOrders() {
@@ -195,7 +231,6 @@ public class Menu {
     }
 
     public static void showCatalogue() {
-        System.out.println("\nCATALOGUE");
         for (Product product : catalogue.getProducts()) {
             System.out.println(product);
         }

@@ -69,7 +69,7 @@ public class Product {
     @Override
     public String toString() {
         return "\n" + name + "\nArtist: " + artist + "\nGender: " + gender
-                + "\nYear: " + year + "\nCost: $" + cost;
+                + "\nYear: " + year + "\nCost: $" + cost + "\nId: " + id;
     }
 
 }

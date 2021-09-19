@@ -25,7 +25,22 @@ public class Catalogue {
     }
 
     public void removeProduct(String id) {
-        // TODO: removeProduct method
+        Product product;
+        product = findProductById(id);
+        if (product == null){
+            System.out.println("This product is not in your catalogue :(");
+            return;
+        }
+        products.remove(product);
+    }
+    
+    public Product findProductById(String id) {
+        for (Product product : products) {
+            if (product.getId().equals(id)) {
+                return product;
+            }
+        }
+        return null;
     }
 
     static public Catalogue instance(ArrayList<Product> products) {
