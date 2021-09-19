@@ -7,9 +7,15 @@ import java.util.Scanner;
 
 public class Menu {
     
-    public static Users users = Users.instance(new ArrayList<User>());
     public static Session session;
     public static ShoppingCart shoppingCart = ShoppingCart.instance(new ArrayList<Product>());
+    public static Orders orders = Orders.instance(new ArrayList<Order>());
+    
+    public static Users users = Users.instance(new ArrayList<User>(){
+        {
+            add(new User("oosuna", "123"));
+        }
+    });
     
     public static Catalogue catalogue = Catalogue.instance(
         new ArrayList<Product>() {
@@ -67,13 +73,12 @@ public class Menu {
             System.out.println(formatter.format(date));
             System.out.println("\n1. Add product to shopping cart");
             System.out.println("2. Remove product in shopping cart");
-            System.out.println("3. Show shopping cart");
-            System.out.println("4. Create order");
-            System.out.println("5. My shopping cart");
-            System.out.println("6. My orders");
-            System.out.println("7. Catalogue");
-            System.out.println("8. Logout");
-            System.out.println("9. Get out");
+            System.out.println("3. Create order");
+            System.out.println("4. My shopping cart");
+            System.out.println("5. My orders");
+            System.out.println("6. Catalogue");
+            System.out.println("7. Logout");
+            System.out.println("8. Get out");
             System.out.print("Enter an option: ");
             option = scanner.nextInt();
             
@@ -85,30 +90,27 @@ public class Menu {
                     removeProductInShoppingCart();
                     break;
                 case 3:
-                    // TODO
+                    createOrder();
                     break;
                 case 4:
-                    // TODO
-                    break;
-                case 5:
                     System.out.println("\nMY SHOPPING CART");
                     myShoppingCart();
                     break;
-                case 6:
-                    // TODO
+                case 5:
+                    myOrders();
                     break;
-                case 7:
+                case 6:
                     System.out.println("\nCATALOGUE");
                     showCatalogue();
                     break;
-                case 8:
-                    // TODO
+                case 7:
+                    logOut();
                     break;
                 default:
                     System.out.println("\nSee you!\n");
                     return;
             }
-        } while (option>= 1 && option <= 8);
+        } while (option>= 1 && option <= 7);
     }
 
     public static void logIn() {
@@ -201,12 +203,17 @@ public class Menu {
     
     public static void removeProductInShoppingCart() {
         
+        if (shoppingCart.getProducts().size() == 0) {
+            System.out.println("\nYour shopping cart is empty :(");   
+            return;
+        }
+
         String id;
         Product product;
         
         System.out.println("\nREMOVE PRODUCT IN SHOPPING CART");
         
-        showShoppingCart();
+        myShoppingCart();
         
         scanner.nextLine();
 
@@ -226,18 +233,41 @@ public class Menu {
 
     }
 
-    public static void showShoppingCart() {
-        for (Product product : shoppingCart.getProducts()) {
-            System.out.println(product);
-        }
-    }
-
     public static void createOrder() {
-        // TODO: menu method
+        
+        if (shoppingCart.getProducts().size() == 0) {
+            System.out.println("\nYour shopping cart is empty :(");   
+            return;
+        }
+
+        Order order;
+        User user;
+        double cost;
+        ArrayList<Product> products = new ArrayList<Product>();
+
+        user = users.findUserByUsername(session.getUsername());
+        cost = shoppingCart.calculateTotalCost();
+        
+        for (Product product : shoppingCart.getProducts()) {
+            products.add(product);
+        }
+
+        shoppingCart.getProducts().clear();
+        
+        order = new Order(products, user, cost);
+
+        orders.addOrder(order);
+
+        System.out.println("\nYour order has been created :)");
+        
+        System.out.println("\nProducts");
+        order.printProducts();
+        System.out.println(order);
+
     }
 
     public static void myShoppingCart() {
-    
+
         if (shoppingCart.getProducts().size() == 0) {
             System.out.println("\nYour shopping cart is empty :(");   
             return;
@@ -250,7 +280,10 @@ public class Menu {
     }
     
     public static void myOrders() {
-        // TODO: menu method
+        System.out.println("\nMY ORDERS");
+        for (Order order : orders.getOrders()) {
+            System.out.println(order);
+        }
     }
 
     public static void showCatalogue() {

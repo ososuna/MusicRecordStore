@@ -38,9 +38,15 @@ public class Order {
         this.totalCost = totalCost;
     }
 
+    public void printProducts() {
+        for (Product product : products) {
+            System.out.println(product);
+        }
+    }
+
     @Override
     public String toString() {
-        return "Order [products=" + products + ", totalCost=" + totalCost + ", user=" + user + "]";
+        return "\nUser: " + user.getUsername() + "\nTotal Cost: $" + totalCost;
     }
 
 }

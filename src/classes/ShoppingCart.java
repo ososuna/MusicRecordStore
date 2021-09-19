@@ -37,6 +37,14 @@ public class ShoppingCart {
         return null;
     }
 
+    public double calculateTotalCost() {
+        double totalCost = 0;
+        for (Product product : products) {
+            totalCost += product.getCost();
+        }
+        return totalCost;
+    }
+
     static public ShoppingCart instance(ArrayList<Product> products) {
         if (_instance == null) {
             _instance = new ShoppingCart(products);
