@@ -18,6 +18,11 @@ public class Session {
         this.username = username;
     }
 
+    public void removeSession() {
+        this.username = null;
+        _instance = null;
+    }
+
     static public Session instance(String username) {
         if (_instance == null) {
             _instance = new Session(username);

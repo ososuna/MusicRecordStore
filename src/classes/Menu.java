@@ -77,7 +77,7 @@ public class Menu {
             System.out.println("4. My shopping cart");
             System.out.println("5. My orders");
             System.out.println("6. Catalogue");
-            System.out.println("7. Logout");
+            System.out.println("7. Log out");
             System.out.println("8. Get out");
             System.out.print("Enter an option: ");
             option = scanner.nextInt();
@@ -282,7 +282,10 @@ public class Menu {
     public static void myOrders() {
         System.out.println("\nMY ORDERS");
         for (Order order : orders.getOrders()) {
+            System.out.println("\nORDER");
+            order.printProducts();
             System.out.println(order);
+            System.out.println();
         }
     }
 
@@ -293,7 +296,8 @@ public class Menu {
     }
 
     public static void logOut() {
-        // TODO: menu method
+        session.removeSession();
+        loginMenu();
     }
 
 }
