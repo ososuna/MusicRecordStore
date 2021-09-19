@@ -82,7 +82,7 @@ public class Menu {
                     addProductToShoppingCart();
                     break;
                 case 2:
-                    // TODO
+                    removeProductInShoppingCart();
                     break;
                 case 3:
                     // TODO
@@ -200,7 +200,30 @@ public class Menu {
     }
     
     public static void removeProductInShoppingCart() {
-        // TODO: menu method
+        
+        String id;
+        Product product;
+        
+        System.out.println("\nREMOVE PRODUCT IN SHOPPING CART");
+        
+        showShoppingCart();
+        
+        scanner.nextLine();
+
+        System.out.print("\nEnter id: ");
+        id = scanner.nextLine();
+
+        product = shoppingCart.findProductById(id);
+
+        if (product == null) {
+            System.out.println("\nThere is no product with this id :(");
+            return;
+        }
+
+        shoppingCart.removeProduct(product);
+
+        System.out.println("\nProduct removed successfully :)");
+
     }
 
     public static void showShoppingCart() {
@@ -216,7 +239,7 @@ public class Menu {
     public static void myShoppingCart() {
     
         if (shoppingCart.getProducts().size() == 0) {
-            System.out.println("\nYour shopping cart is empty :(");    
+            System.out.println("\nYour shopping cart is empty :(");   
             return;
         }
 

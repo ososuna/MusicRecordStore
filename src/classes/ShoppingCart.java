@@ -24,14 +24,8 @@ public class ShoppingCart {
         this.products.add(product);
     }
 
-    public void removeProduct(String id) {
-        Product product;
-        product = findProductById(id);
-        if (product == null){
-            System.out.println("This product is not in your catalogue :(");
-            return;
-        }
-        products.remove(product);
+    public void removeProduct(Product product) {
+        this.products.remove(product);
     }
 
     public Product findProductById(String id) {
